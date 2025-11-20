@@ -1,0 +1,105 @@
+1. What is the difference between a function and a method in Python?
+->Function vs Method in Python
+Function: A standalone block of reusable code defined with def (or lambda) at module level or nested inside another function. Example:
+def add(a, b):
+    return a + b
+
+Method: A function that is associated with an object (defined inside a class). It is called on an instance (or on the class for @classmethod/@staticmethod). 
+Example:
+class Counter:
+    def __init__(self):
+        self.n = 0
+    def increment(self):        # instance method
+        self.n += 1
+c = Counter()
+c.increment()   # method call
+Key difference: methods implicitly receive the instance (self) or class (cls) as the first argument; functions do not.
+
+2. Explain the concept of function arguments and parameters in Python.
+->Arguments vs Parameters
+Parameter: the variable name in the function definition (placeholders).
+def greet(name):  # `name` is a parameter
+    print("Hi", name)
+Argument: the actual value you pass when calling the function.
+greet("Vivek")   # "Vivek" is an argument
+
+3. What are the different ways to define and call a function in Python?
+->Different ways to define & call a function
+Normal def:
+def add(a, b): return a + b
+add(2, 3)
+Default arguments:
+def power(x, p=2): return x**p
+power(3)      # uses p=2
+Variable arguments:
+def f(*args, **kwargs):
+    print(args, kwargs)
+f(1,2, a=3)
+Lambda (anonymous) function:
+mul = lambda x, y: x*y
+mul(2,3)
+Nested functions / closures:
+def outer(x):
+    def inner(y):
+        return x + y
+    return inner
+add5 = outer(5)
+add5(2)   # 7
+
+4. What is the purpose of the `return` statement in a Python function?
+->Purpose of return-
+return sends a value (or values) back to the caller and exits the function. If omitted, the function returns None.
+You can return multiple values as a tuple: return a, b.
+return ends the function immediately (any code after it in the function won’t run).
+
+5. What are iterators in Python and how do they differ from iterables?
+->Iterables vs Iterators
+Iterable: an object you can loop over (supports __iter__() or __getitem__), e.g., lists, tuples, strings, dicts. You can call iter(obj) to get an iterator.
+Iterator: an object that represents a stream of values and implements __next__() and __iter__(). Calling next(iterator) yields the next item or raises StopIteration when exhausted.
+Example:
+lst = [1,2,3]         # iterable
+it = iter(lst)       # iterator
+next(it)  # 1
+next(it)  # 2
+
+6. Explain the concept of generators in Python and how they are defined.
+->Generators — 
+Generator: a special kind of iterator produced by either:
+a function that uses yield, or
+a generator expression.
+Yield pauses the function, returns a value, and preserves local state for resumption.
+
+7. What are the advantages of using generators over regular functions?
+->Advantages of generators over regular functions
+Memory efficient: produce items one-by-one, useful for large/streaming data.
+Lazy evaluation: compute values on demand, not all at once.
+Composability: can chain generator pipelines ((f(x) for x in g)).
+Readable code: simpler than building iterator classes.
+Can represent infinite sequences easily (e.g., itertools.count() style).
+
+8. What is a lambda function in Python and when is it typically used?
+->Lambda function
+A small anonymous function defined with lambda keyword: lambda args: expression.
+Typical uses:
+short one-line functions passed as arguments (e.g., key functions, map, sorted).
+quick throwaway functions inside higher-order calls.
+
+9. Explain the purpose and usage of the `map()` function in Python.
+->Purpose & usage of map()
+map(func, *iterables) applies func to each item from the given iterable(s) and returns an iterator (in Python 3).
+Example:
+nums = [1,2,3]
+doubled = map(lambda x: x*2, nums)
+list(doubled)  # [2,4,6]
+When multiple iterables are provided, func receives one argument per iterable and stops at the shortest iterable.
+
+10. What is the difference between `map()`, `reduce()`, and `filter()` functions in Python?
+->Difference between map(), reduce(), and filter()
+map(func, iterable...):
+Transforms each item by applying func. Returns an iterator of results.
+Example: double every item.
+filter(func, iterable):
+Keeps items where func(item) is truthy. Returns an iterator of filtered items.
+Example: keep even numbers: filter(lambda x: x%2==0, nums)
+reduce(func, iterable[, initializer]) (from functools):
+Reduces iterable to a single value by repeatedly applying func to an accumulator and the next item. func takes two args (acc, item) and returns new acc.
